@@ -12,6 +12,7 @@ pacmanでインストールできる
 ＃winetricsでwineの設定  
 ##フォントのインストール  
 winetricsを起動し、select the default wineprefix>Install a fontからすべてのフォントをインストールする  
+日本語を表示するときはロケールの設定をしよう  
   
 ##directXのインストール  
 Install a Windows DLL or componentからd3dx9とdirectplay、dsoundをインストールする  
