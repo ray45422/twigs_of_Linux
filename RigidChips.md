@@ -16,7 +16,7 @@ winetricsを起動し、select the default wineprefix>Install a fontからすべ
   
 ##directXのインストール  
 Install a Windows DLL or componentからd3dx9とdirectplay、dsoundをインストールする  
-dinputを入れるとF3(Configure Input)で落ちてしまうので入れないようにするのが賢明
+dinputを入れるとF3(Configure Input)で落ちてしまうので入れないようにするのが賢明  
 mpg123が無いとNATSoundとかでエラーを吐かれたようなきがする  
   
 #これで終わり  
