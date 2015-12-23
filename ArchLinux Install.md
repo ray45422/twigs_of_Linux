@@ -37,8 +37,8 @@ man使え
 ##ミラーを選択
 `/etc/pacman.d/mirrorlist`を編集する
 物理的に遠いミラーはだいたい遅いので以下を頭らへんに追記する
->Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch
-Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/$repo/os/$arch
+>Server = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/$repo/os/$arch  
+Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/$repo/os/$arch  
 
 ##ベースシステムのインストール
 ついでなので一緒にいろいろインストールしてしまおう
@@ -61,7 +61,7 @@ rootで使うことが無いと思われるが一応変更
 
 入力を求められたらzshのパス(多分`/usr/bin/zsh`)を入力
 ###ホストネームの設定
->\# echo hostname > /etc/hostname
+>\# echo < Hostname > /etc/hostname
 
 ###ロケールの生成と設定
 `/etc/locale.gen`
@@ -71,16 +71,16 @@ ja_JP.UTF-8 UTF-8
 
 のコメントアウトを外す
 
->\# locale-gen
-\# echo LANG=en_US.UTF-8 > /etc/locale.conf
-\# export LANG=en_US.UTF-8
-\# echo "KEYMAP=jp106" > /etc/vconsole.conf
+>\# locale-gen  
+\# echo LANG=en_US.UTF-8 > /etc/locale.conf  
+\# export LANG=en_US.UTF-8  
+\# echo "KEYMAP=jp106" > /etc/vconsole.conf  
 
 これで大体大丈夫なはず
 
 ##Initial ramdisk環境の作成
 必要かわからないがやっても問題なさそうなのでやっておく
->\# mkinitcpid -p linux
+>\# mkinitcpio -p linux
 
 ##パスワードを設定
 rootのパスワードを設定する
@@ -107,14 +107,14 @@ nanoでvisudo
 間違っていればエラーが出るのでメッセージを頼りに編集しなおす
 ##GRUBのインストール
 マルチブートとかするときは
->\# pacman -S os-prober
-\# grub-install --recheck /dev/< partition >
-\# grub-mkconfig -o /boot/grub/grub.cfg
+>\# pacman -S os-prober  
+\# grub-install --recheck /dev/< partition >  
+\# grub-mkconfig -o /boot/grub/grub.cfg  
 
 ##再起動
->\# exit
-\# umount -R /mnt
-\# reboot
+>\# exit  
+\# umount -R /mnt  
+\# reboot  
 
 これで再起動できればとりあえずインストール成功です
 
@@ -130,13 +130,13 @@ Intelなら
 >$ sudo pacman -S xf86-video-intel
 
 #DMのインストール
->$ sudo pacman -S slim archlinux-themes-slim slim-themes
+>$ sudo pacman -S slim archlinux-themes-slim slim-themes  
 $ EDITOR=nano sudo -e /etc/slim.conf
 
 `/etc/slim.conf`の以下の部分を編集する
->login_cmd exec /bin/zsh -l ~/.xinitrc %session
-daemon yes
-current_theme archlinux-simplyblac
+>login_cmd exec /bin/zsh -l ~/.xinitrc %session  
+daemon yes  
+current_theme archlinux-simplyblac  
 
 このように編集とコメントアウト
 最後に
@@ -150,20 +150,23 @@ current_theme archlinux-simplyblac
 
 ##packerのインストール
 先にpackerをインストールしてAURを使いやすくする
->$ wget https://aur.archlinux.org/packages/pa/packer/packer.tar.gz
->$ tar -zxvf packer.tar.gz
->$ cd packer
->$ makepkg -s
->$ sudo pacman -U packer-20140817-1-any.pkg.tar.xz
+>$ git clone https://aur.archlinux.org/packer.git  
+>$ cd packer  
+>$ makepkg -s  
+>$ sudo pacman -U packer-date-any.pkg.tar.xz  
 
-これでインストールできる
-このままではmakepkgのパッケージ圧縮が遅いことがあるのでマルチスレッドで動作するように変更する(2015/11/18追記)
-makepkgの設定ファイルは`/etc/makepkg.conf`である
-これを以下のように編集する
+これでインストールできる  
+このままではmakepkgのパッケージ圧縮が遅いことがあるのでマルチスレッドで動作するように変更する(2015/11/18追記)  
+makepkgの設定ファイルは`/etc/makepkg.conf`である  
+これを以下のように編集する  
 
 >COMPRESSXZ=(xz -T 0 -c -z -)
 
 `-T 0`オプションを追加するとマルチスレッドで処理してくれる
+
+またコンパイルも遅いので  
+`MAKEFLAGS="-jn"`  
+として並列処理させる(nはCPUのコア数にするといいかもしれない)
 
 ##mozcのインストール
 >$ sudo pacman -S mozc ibus-mozc
